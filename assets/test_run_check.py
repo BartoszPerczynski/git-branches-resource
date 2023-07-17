@@ -44,7 +44,6 @@ class TestRunCheck(unittest.TestCase):
     @patch('subprocess.run')
     @patch('subprocess.Popen')
     def test_failed_subprocess_execution(self, mock_popen, mock_run):
-        # Given we are
         mock_run.return_value = subprocess.CompletedProcess(
             args=['git', 'ls-remote', '--heads', 'example.git'],
             returncode=1,
@@ -52,7 +51,9 @@ class TestRunCheck(unittest.TestCase):
             stderr=b'fatal: not a git repository'
         )
 
+        # Given concourse setup with an invalid git repo
         payload = '{"source": {"uri": "example.git"}}'
+
         # When we call git to get remote branches
         mock_popen.return_value = subprocess.Popen(
             ['bash', 'run_check.sh', payload],

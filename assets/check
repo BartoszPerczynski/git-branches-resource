@@ -12,6 +12,7 @@ PATH=/usr/local/bin:$PATH
 
 payload="$(cat <&0)"
 
+
 load_pubkey "$payload"
 configure_https_tunnel "$payload"
 configure_git_ssl_verification "$payload"
@@ -24,4 +25,4 @@ git_config_payload=$(jq -r '.source.git_config // []' <<< "$payload")
 
 configure_git_global "$payload"
 
-python3 $(dirname $0)/run-check.py "$payload" >&3
+python3 $(dirname $0)/run_check.py "$payload" >&3
